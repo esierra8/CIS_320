@@ -8,10 +8,10 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
   <head>
-    <title>Crusiemon</title>
+    <title>Advance Web Development CIS320</title>
   </head>
   <body>
-  <h1>I am walking here</h1>
-  <p>You don't knoww me!</p>
+  <h1>This is a heading</h1>
+  <p>This is a paragraph</p>
   </body>
 </html>
