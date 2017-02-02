@@ -8,7 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
   <head>
-    <title>Advance Web Development CIS320</title>
+    <title>Advance Web Development CIS320 v2</title>
   </head>
   <body>
   <h1>This is a heading</h1>
