@@ -1,60 +1,53 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-    <meta charset="utf-8">
-    <title>JavaScript Assignment</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
+    <title>Sample Form</title>
 </head>
+
 <body>
-<h1>JavaScript Assignment</h1>
 
-<p>Use JavaScript and jQuery and complete the five parts below.</p>
+<!-- Navigation Bar -->
+<nav class="navbar navbar-inverse">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
 
-<h2>Part 1</h2>
-<p>Every time the user hits button below, print to the console "Hello."</p>
-<form>
-    <input type="button" name="button1" onclick="printHello()" id="button1"  value="Button 1"><br />
-</form>
+                <!-- Three line "hamburger" icon for the collapsed navigation -->
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
 
-<h2>Part 2</h2>
-<p>Every time the user hits button below, fetch the values in fields 1
-    and 2, add them (don't concatenate), and put them in field 3.</p>
-<form>
-    <input type="text" name="field1" id="field1" value="1"> +
-    <input type="text" name="field2" id="field2" value="1"> =
-    <input type="text" name="field3" id="field3" value=""><br />
-    <input type="button" name="button2" id="button2" onclick="addTwoValues()" value="Button 2"><br />
-</form>
+            <!-- Title on nav bar -->
+            <a class="navbar-brand" href="#">CIS 320 ES</a>
+        </div>
 
-<h2>Part 3</h2>
-<p id="paragraphToHide">Every time the user hits button below, hide this paragraph. If
-    It is already hidden, then show it.</p>
-<p>See <a href='http://stackoverflow.com/questions/178325/how-do-i-check-if-an-element-is-hidden-in-jquery'>this link to
-    understand test if an item is hidden</a>.</p>
-<form>
-    <input type="button" name="button3" id="button3" onclick="toggleHideAndShow()" value="Button 3"><br />
-</form>
+        <div id="navbar" class="collapse navbar-collapse">
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="index.html">Home</a></li>
+                <li><a href="javascript_assignment.html">Javascript Assignment</a></li>
+                <li><a href="api/name_list_get">Name List JSON</a></li>
+                <li><a href="name_list.html">Name List</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
 
-<h2>Part 4</h2>
-<p>Print to the console "OK" or "Bad" if the phone number fits
-    the reg ex pattern of 555-555-5555. (Doesn't have to be 5's)</p>
-<form>
-    <input type="text" name="phoneField" id="phoneField" value="555-555-5555"><br />
-    <input type="button" name="button4" id="button4" onclick="phonenumber()" value="Button 4">
-</form>
+<div class="container">
+    <h1>| CIS 320 |</h1>
 
-<h2>Part 5</h2>
-<p>Grab the form fields before, and then form and print to the console
-    a JSON request. The output should look like:</p>
-<p id="textOutput">{"firstName":"Paul","lastName":"Craven","email":"paul.craven@simpson.edu"}</p>
-<form>
-    First name: <input type="text" name="firstName" id="firstName"><br />
-    Last name:<input type="text" name="lastName" id="lastName"><br />
-    Email: <input type="email" name="email" id="email"><br />
-    <input type="button" name="button4" id="button5" onclick="jsonstring()" value="Button 5">
-</form>
+    <p>Advance Web Development and Security</p>
+</div>
 
-<!-- Load our scripts -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-<script src="javascript_assignment.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.3.7/js/tether.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </body>
 </html>
