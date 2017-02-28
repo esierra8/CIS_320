@@ -8,6 +8,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.List;
@@ -75,6 +76,49 @@ public class PersonDAO {
         } finally {
             // Ok, close our result set, statement, and connection
             try { rs.close(); } catch (Exception e) { log.log(Level.SEVERE, "Error", e ); }
+            try { stmt.close(); } catch (Exception e) { log.log(Level.SEVERE, "Error", e ); }
+            try { conn.close(); } catch (Exception e) { log.log(Level.SEVERE, "Error", e ); }
+        }
+        // Done! Return the results
+        return list;
+    }
+
+    public static List<Person> insertPeople(String fName, String lName, String email, String phone, String bday) {
+        log.log(Level.FINE, "Get people");
+
+        // Create an empty linked list to put the people we get from the database into.
+        List<Person> list = new LinkedList<Person>();
+
+        // Declare our variables
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+
+
+        try {
+
+            conn = DBHelper.getConnection();
+
+            String sql = "INSERT INTO Person (first, last, email, phone, birthday)\n" +
+                    "            VALUES (?, ?, ?, ?, ? )";
+            /**/
+            stmt = conn.prepareStatement(sql);
+
+            // If you had parameters, they would be set wit something like:
+            stmt.setString(1, fName);
+            stmt.setString(2, lName);
+            stmt.setString(3, email);
+            stmt.setString(4, phone);
+            stmt.setString(5, bday);
+
+            stmt.executeUpdate();
+
+        } catch (SQLException se) {
+            log.log(Level.SEVERE, "SQL Error", se );
+        } catch (Exception e) {
+            log.log(Level.SEVERE, "Error", e );
+        } finally {
+            // Ok, close our result set, statement, and connection
             try { stmt.close(); } catch (Exception e) { log.log(Level.SEVERE, "Error", e ); }
             try { conn.close(); } catch (Exception e) { log.log(Level.SEVERE, "Error", e ); }
         }
