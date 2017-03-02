@@ -26,7 +26,7 @@ public class PersonDAO {
      * @return Returns a list of instances of the People class.
      */
     public static List<Person> getPeople() {
-        log.log(Level.FINE, "Get people");
+        log.log(Level.FINE, "xxGet people");
 
         // Create an empty linked list to put the people we get from the database into.
         List<Person> list = new LinkedList<Person>();
@@ -40,6 +40,7 @@ public class PersonDAO {
         try {
 
             conn = DBHelper.getConnection();
+
 
             String sql = "select id, first, last, email, phone, birthday from Person";
 
@@ -68,6 +69,7 @@ public class PersonDAO {
 
                 // Add this person to the list so we can return it.
                 list.add(person);
+               log.log(Level.INFO, "Results getInt: " + rs.getString("first") );
             }
         } catch (SQLException se) {
             log.log(Level.SEVERE, "SQL Error", se );
