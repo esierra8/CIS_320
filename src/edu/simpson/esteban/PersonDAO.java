@@ -26,7 +26,7 @@ public class PersonDAO {
      * @return Returns a list of instances of the People class.
      */
     public static List<Person> getPeople() {
-        log.log(Level.FINE, "xxGet people");
+        log.log(Level.FINE, "Get people");
 
         // Create an empty linked list to put the people we get from the database into.
         List<Person> list = new LinkedList<Person>();
@@ -64,12 +64,9 @@ public class PersonDAO {
                 person.setLast(rs.getString("last"));
                 person.setEmail(rs.getString("email"));
                 person.setPhone(rs.getString("phone"));
-                person.setBirthday(rs.getDate("birthday"));
+                person.setBirthday(rs.getString("birthday"));
 
-
-                // Add this person to the list so we can return it.
                 list.add(person);
-               log.log(Level.INFO, "Results getInt: " + rs.getString("first") );
             }
         } catch (SQLException se) {
             log.log(Level.SEVERE, "SQL Error", se );
@@ -128,4 +125,91 @@ public class PersonDAO {
         return list;
     }
 
+    public static List<Person> deletePeople(String idValue) {
+        log.log(Level.FINE, "Delete people");
+
+        // Create an empty linked list to put the people we get from the database into.
+        List<Person> list = new LinkedList<Person>();
+
+        // Declare our variables
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+
+
+        try {
+
+            conn = DBHelper.getConnection();
+
+            String sql = "DELETE FROM Person WHERE id = ? ";
+            /**/
+            stmt = conn.prepareStatement(sql);
+
+            stmt.setString(1, idValue);
+
+            // If you had parameters, they would be set wit something like:
+//            stmt.setString(1, fName);
+//            stmt.setString(2, lName);
+//            stmt.setString(3, email);
+//            stmt.setString(4, phone);
+//            stmt.setString(5, bday);
+
+            stmt.executeUpdate();
+
+        } catch (SQLException se) {
+            log.log(Level.SEVERE, "SQL Error", se );
+        } catch (Exception e) {
+            log.log(Level.SEVERE, "Error", e );
+        } finally {
+            // Ok, close our result set, statement, and connection
+            try { stmt.close(); } catch (Exception e) { log.log(Level.SEVERE, "Error", e ); }
+            try { conn.close(); } catch (Exception e) { log.log(Level.SEVERE, "Error", e ); }
+        }
+        // Done! Return the results
+        return list;
+    }
+    public static List<Person> updatePeople(int id, String fName, String lName, String email, String phone, String bday) {
+        log.log(Level.SEVERE, "Update people");
+
+        // Create an empty linked list to put the people we get from the database into.
+        List<Person> list = new LinkedList<Person>();
+
+        // Declare our variables
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+
+
+        try {
+
+            conn = DBHelper.getConnection();
+
+            String sql = "UPDATE Person SET first=?, last=?, email=?, phone=?, birthday=? WHERE id=?";
+
+            stmt = conn.prepareStatement(sql);
+
+            log.log(Level.SEVERE, "Id: " + id);
+
+            // If you had parameters, they would be set wit something like:
+            stmt.setString(1, fName);
+            stmt.setString(2, lName);
+            stmt.setString(3, email);
+            stmt.setString(4, phone);
+            stmt.setString(5, bday);
+            stmt.setInt(6, id);
+
+            stmt.executeUpdate();
+
+        } catch (SQLException se) {
+            log.log(Level.SEVERE, "SQL Error", se );
+        } catch (Exception e) {
+            log.log(Level.SEVERE, "Error", e );
+        } finally {
+            // Ok, close our result set, statement, and connection
+            try { stmt.close(); } catch (Exception e) { log.log(Level.SEVERE, "Error", e ); }
+            try { conn.close(); } catch (Exception e) { log.log(Level.SEVERE, "Error", e ); }
+        }
+        // Done! Return the results
+        return list;
+    }
 }

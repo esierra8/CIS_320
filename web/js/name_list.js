@@ -14,7 +14,7 @@ var addItemButton = $('#addItem');
 addItemButton.on("click", showDialogAdd);
 
 var saveItemButton = $('#saveItem');
-saveItemButton.on("click", isValid);
+saveItemButton.on("click", saveItem);
 
 function updateTable() {
     var url = "api/name_list_get";
@@ -36,12 +36,21 @@ function updateTable() {
                     phoneString.substring(6,10);
                 rowsInTable += '<td>' + cleanUpPhoneString + '</td>';
                 rowsInTable += '<td>' + json_result[i].birthday + '</td>';
+                rowsInTable += '<td><button type="button" id="deleteButton" name="delete" class="deleteButton btn" ' +
+                    'value=" ' + json_result[i].id + ' ">Delete</button></td>';
+                rowsInTable += '<td><button type="button" id="editButton" name="edit" class="editButton btn" ' +
+                    'value=" ' + json_result[i].id + ' ">Edit</button></td>';
                 rowsInTable += '</tr>';
                 populatedTable += rowsInTable + '\n';
             }
             document.getElementById("table_list").innerHTML = populatedTable;
             console.log("Populated Table: " + populatedTable);
             console.log("Done populating table.xx");
+
+            var deleteButtons = $(".deleteButton");
+            deleteButtons.on("click", deleteItem);
+            var editButtons = $(".editButton");
+            editButtons.on("click", editItem);
         }
     );
 }
@@ -56,13 +65,15 @@ function showDialogAdd() {
 
 function saveItem() {
     var url = "api/name_list_edit";
+    var id = $("#id").val();
     var fName = $("#firstName").val();
     var lName = $("#lastName").val();
     var email = $("#email").val();
     var phoneNumber = $("#phoneNumber").val();
     var dob = $("#birthday").val();
-    console.log("Save items: " + fName+lName+email+phoneNumber+dob);
-    var dataToServer = {fName : fName,
+
+    var dataToServer = {id : id,
+                        fName : fName,
                         lName : lName,
                         email : email,
                         phoneNumber : phoneNumber,
@@ -74,7 +85,7 @@ function saveItem() {
         data: dataToServer,
         success: function(dataFromServer) {
             console.log(dataFromServer);
-            location.reload();
+            updateTable();
         },
         // contentType: "application/json",
         // dataType: 'text' // Could be JSON or whatever too
@@ -230,7 +241,7 @@ function isValid(){
 
 function cleanForm(){
     $('#id').val("");
-
+    document.getElementById('invalidMessage').innerHTML='';
     //FirstName cleanup
     $('#firstName').val("");
     $('#firstNameDive').removeClass("has-success");
@@ -268,7 +279,48 @@ function cleanForm(){
     $('#birthdayGlyph').removeClass("glyphicon-ok");
 
 }
-function jqueryPostButtonAction() {
+
+function deleteItem(e) {
+    console.log("Enter Delete Function.")
+    console.debug("Delete");
+    console.debug(e.target.value);
+
+    var url = "api/name_list_delete";
+    var id = e.target.value;
+    console.log("Delete button value: " + id);
+    var dataToServer = {id : id};
+
+    $.ajax({
+        type: 'POST',
+        url: url,
+        data: dataToServer,
+        success: function(dataFromServer) {
+            console.log(dataFromServer);
+            updateTable();
+        },
+        // contentType: "application/json",
+        // dataType: 'text' // Could be JSON or whatever too
+    });
 
 
+}
+function editItem(e) {
+    console.log("Edit");
+    console.debug(e.target.value);
+
+    var id = e.target.value;
+    var firstName = e.target.parentNode.parentNode.querySelectorAll("td")[1].innerHTML;
+    var lastName = e.target.parentNode.parentNode.querySelectorAll("td")[2].innerHTML;
+    var email = e.target.parentNode.parentNode.querySelectorAll("td")[3].innerHTML;
+    var phoneNumber = e.target.parentNode.parentNode.querySelectorAll("td")[4].innerHTML;
+    var birthday = e.target.parentNode.parentNode.querySelectorAll("td")[5].innerHTML;
+
+    $('#id').val(id); // Yes, now we set and use the hidden ID field
+    $('#firstName').val(firstName);
+    $('#lastName').val(lastName);
+    $('#email').val(email);
+    $('#phoneNumber').val(phoneNumber);
+    $('#birthday').val(birthday);
+// Etc
+    $('#myModal').modal('show');
 }
